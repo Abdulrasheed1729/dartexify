@@ -1,0 +1,10 @@
+name: dartexify_article_hooks
+
+environment: 
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  mason:
+    git:
+      url: https://github.com/felangel/mason
+      path: packages/mason
