@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:dartexify_cli/src/commands/create/templates/dartexify_article/dartexify_article_bundle.dart';
-import 'package:dartexify_cli/src/commands/create/templates/template.dart';
+import 'package:dartexify_cli/src/commands/create/templates/templates.dart';
 import 'package:dartexify_cli/src/logger_extension.dart';
 import 'package:mason_logger/mason_logger.dart';
 

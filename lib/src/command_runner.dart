@@ -2,7 +2,7 @@ import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:cli_completion/cli_completion.dart';
 import 'package:dartexify_cli/src/commands/commands.dart';
-import 'package:dartexify_cli/src/commands/create/create.dart';
+import 'package:dartexify_cli/src/commands/create/commands/create_subcommands.dart';
 import 'package:dartexify_cli/src/version.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:pub_updater/pub_updater.dart';
@@ -41,7 +41,7 @@ class DartexifyCliCommandRunner extends CompletionCommandRunner<int> {
 
     // Add sub commands
     addCommand(SampleCommand(logger: _logger));
-    addCommand(CreateCommand(logger: _logger));
+    addCommand(CreateSubCommand(logger: _logger));
     addCommand(UpdateCommand(logger: _logger, pubUpdater: _pubUpdater));
   }
 

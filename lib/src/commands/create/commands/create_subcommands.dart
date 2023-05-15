@@ -2,16 +2,18 @@ import 'dart:async';
 
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
-import 'package:dartexify_cli/src/commands/create/templates/template.dart';
+import 'package:dartexify_cli/src/commands/create/templates/templates.dart';
 import 'package:mason/mason.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 import 'package:universal_io/io.dart';
 
-final RegExp _identifierRegExp = RegExp('[a-z_][a-z0-9_]*');
-
 const _defaultDescription =
     'A very nice LaTeX Project created by DarTeXify CLI.';
+
+const _defaultTitle = 'A very nice analysis of the DarTeXify CLI.';
+
+const _defaultAuthor = 'Plushy Dash';
 
 /// A method which returns a [Future<MasonGenerator>] given a [MasonBundle].
 typedef MasonGeneratorFromBundle = Future<MasonGenerator> Function(MasonBundle);
@@ -19,13 +21,14 @@ typedef MasonGeneratorFromBundle = Future<MasonGenerator> Function(MasonBundle);
 /// A method which returns a [Future<MasonGenerator>] given a [Brick].
 typedef MasonGeneratorFromBrick = Future<MasonGenerator> Function(Brick);
 
-abstract class CreateSubCommand extends Command<int> {
+class CreateSubCommand extends Command<int> {
   CreateSubCommand({
-    required this.logger,
-    required MasonGeneratorFromBundle? generatorFromBundle,
-    required MasonGeneratorFromBrick? generatorFromBrick,
+    required Logger logger,
+    MasonGeneratorFromBundle? generatorFromBundle,
+    MasonGeneratorFromBrick? generatorFromBrick,
   })  : _generatorFromBundle = generatorFromBundle ?? MasonGenerator.fromBundle,
-        _generatorFromBrick = generatorFromBrick ?? MasonGenerator.fromBrick {
+        _generatorFromBrick = generatorFromBrick ?? MasonGenerator.fromBrick,
+        _logger = logger {
     argParser
       ..addOption(
         'description',
@@ -37,16 +40,44 @@ abstract class CreateSubCommand extends Command<int> {
         'output-directory',
         help: 'The desired output directory when creating a new project.',
         abbr: 'o',
+      )
+      ..addOption(
+        'title',
+        abbr: 't',
+        help: 'Topic of discussion for the project.',
+      )
+      ..addOption(
+        'author',
+        abbr: 'a',
+        help: 'Name of author ',
+      )
+      ..addOption(
+        'type',
+        help: 'Project type',
+        allowed: [
+          ProjectType.article.name,
+          ProjectType.book.name,
+          ProjectType.report.name,
+          ProjectType.beamer.name,
+        ],
+      )
+      ..addFlag(
+        'latexmk',
+        defaultsTo: null,
+      )
+      ..addFlag(
+        'makefile',
+        defaultsTo: null,
       );
   }
 
   @override
-  String get description => throw UnimplementedError();
+  String get description => 'Create an awesome 🌟 LaTeX project.';
 
   @override
-  String get name => throw UnimplementedError();
+  String get name => 'create';
 
-  final Logger logger;
+  final Logger _logger;
 
   final MasonGeneratorFromBundle _generatorFromBundle;
 
@@ -55,7 +86,7 @@ abstract class CreateSubCommand extends Command<int> {
   ArgResults? argResultOverrides;
 
   /// Should return the desired template to be created during a command run.
-  Template get template;
+  Template get template => DartexifyArticleTemplate();
 
   @override
   String get invocation => 'dartexify create $name <project-name> [arguments]';
@@ -69,40 +100,74 @@ abstract class CreateSubCommand extends Command<int> {
     return Directory(directory);
   }
 
-  bool _isValidPackageName(String name) {
-    final match = _identifierRegExp.matchAsPrefix(name);
-    return match != null && match.end == name.length;
-  }
-
-  void _validateProjectName(List<String> args) {
-    logger.detail('Validating project name; args: $args');
-
-    if (args.isEmpty) {
-      usageException('No option specified for the project name.');
-    }
-
-    if (args.length > 1) {
-      usageException('Multiple project names specified.');
-    }
-
-    final name = args.first;
-    final isValidProjectName = _isValidPackageName(name);
-    if (!isValidProjectName) {
-      usageException(
-        '"$name" is not a valid package name.',
-      );
-    }
-  }
 
   /// Gets the project name.
   String get projectName {
     final args = argResults.rest;
-    _validateProjectName(args);
+
+    if (args.isEmpty) {
+      return _logger.prompt(
+        'What is the project name?',
+        defaultValue: 'Hello Dartexify',
+      );
+    }
+
+    // _validateProjectName(args);
     return args.first;
+  }
+
+  /// Gets the project name.
+  String get title {
+    return argResults['title'] as String? ??
+        _logger.prompt(
+          'Project topic of discussion?',
+          defaultValue: _defaultTitle,
+        );
+  }
+
+  /// Gets the project author name.
+  String get author {
+    return argResults['author'] as String? ??
+        _logger.prompt(
+          'Name of Author?',
+          defaultValue: _defaultAuthor,
+        );
   }
 
   /// Gets the description for the project.
   String get projectDescription => argResults['description'] as String? ?? '';
+
+  /// Checks if latexmk should be used or not.
+  bool get latexmk {
+    return argResults['latexmk'] as bool? ??
+        _logger.confirm(
+          'Include Latexmkrc?',
+          defaultValue: true,
+        );
+  }
+
+  /// Checks if makefile should be used or not.
+  bool get makefile {
+    return argResults['latexmk'] as bool? ??
+        _logger.confirm(
+          'Include makefile?',
+          defaultValue: true,
+        );
+  }
+
+  /// Gets the type of the project
+  String get type =>
+      argResults['type'] as String? ??
+      _logger.chooseOne(
+        'Select project type',
+        choices: [
+          ProjectType.article.name,
+          ProjectType.book.name,
+          ProjectType.report.name,
+          ProjectType.beamer.name,
+        ],
+        defaultValue: ProjectType.article.name,
+      );
 
   Future<MasonGenerator> _getGeneratorForTemplate() async {
     try {
@@ -110,14 +175,14 @@ abstract class CreateSubCommand extends Command<int> {
         name: template.bundle.name,
         version: '^${template.bundle.version}',
       );
-      logger.detail(
+      _logger.detail(
         '''Building generator from brick: ${brick.name} ${brick.location.version}''',
       );
       return await _generatorFromBrick(brick);
     } catch (_) {
-      logger.detail('Building generator from brick failed: $_');
+      _logger.detail('Building generator from brick failed: $_');
     }
-    logger.detail(
+    _logger.detail(
       '''Building generator from bundle ${template.bundle.name} ${template.bundle.version}''',
     );
     return _generatorFromBundle(template.bundle);
@@ -141,10 +206,20 @@ abstract class CreateSubCommand extends Command<int> {
   Map<String, dynamic> getTemplateVars() {
     final projectName = this.projectName;
     final projectDescription = this.projectDescription;
+    final type = this.type;
+    final title = this.title;
+    final latexmk = this.latexmk;
+    final makefile = this.makefile;
+    final author = this.author;
 
     return <String, dynamic>{
       'project_name': projectName,
       'description': projectDescription,
+      'type': type,
+      'title': title,
+      'latexmk': latexmk,
+      'makefile': makefile,
+      'author': author,
     };
   }
 
@@ -154,18 +229,27 @@ abstract class CreateSubCommand extends Command<int> {
   Future<int> runCreate(MasonGenerator generator, Template template) async {
     var vars = getTemplateVars();
 
-    final generateProgress = logger.progress('Bootstrapping');
+    final generateProgress = _logger.progress('Bootstrapping');
     final target = DirectoryGeneratorTarget(outputDirectory);
 
     await generator.hooks.preGen(vars: vars, onVarsChanged: (v) => vars = v);
-    final files = await generator.generate(target, vars: vars, logger: logger);
+    final files = await generator.generate(target, vars: vars, logger: _logger);
     generateProgress.complete('Generated ${files.length} file(s)');
 
     await template.onGenerateComplete(
-      logger,
+      _logger,
       Directory(path.join(target.dir.path, projectName)),
     );
 
     return ExitCode.success.code;
   }
+}
+
+
+/// Specifies the diffrent type of LaTeX projects
+enum ProjectType {
+  article,
+  book,
+  report,
+  beamer,
 }
