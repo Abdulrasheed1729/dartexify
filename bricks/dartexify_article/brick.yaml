@@ -28,42 +28,15 @@ vars:
   project_name:
     type: string
     description: A simple name for your project.
-    default: Hello Dartexify
+    default: Project Dartexify
     prompt: What is the project name?
   description:
     type: string
     description: The project description
     default: A nice LaTeX project
     prompt: What is the project description?
-  title:
-    type: string
-    description: Title of project.
-    default: An analysis of the Dart SDK
-    prompt: Topic of discussion in this project?
   author:
     type: string
-    description: Author of project.
+    description: Title of project.
     default: Plushy Dash
-    prompt: Author 
-  type:
-    type: enum
-    description: Project type.
-    default: article
-    prompt: Select project type
-    values:
-      - article
-      - book
-      - report
-      - beamer
-  latexmk:
-    type: boolean
-    description: Add latexmkrc file.
-    default: true
-    prompt: Use Latexmk?
-  makefile:
-    type: boolean
-    description: Add makefile.
-    default: false
-    prompt: Should add makefile
-
-  
+    prompt: Author of article

@@ -1,3 +1,2 @@
-export 'dartexify_article_bundle.dart';
-export 'dartexify_template.dart';
+export 'dartexify_article/dartexify_article.dart';
 export 'template.dart';
