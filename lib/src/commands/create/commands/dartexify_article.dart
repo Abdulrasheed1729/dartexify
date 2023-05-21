@@ -10,12 +10,7 @@ class CreateDartexifyArticle extends CreateSubCommand {
     required super.logger,
     required super.generatorFromBundle,
     required super.generatorFromBrick,
-  }) {
-    argParser.addOption(
-      'executable-name',
-      help: 'The CLI executable name (defaults to the project name)',
-    );
-  }
+  });
 
   @override
   String get name => 'article';
@@ -26,15 +21,15 @@ class CreateDartexifyArticle extends CreateSubCommand {
   @override
   Template get template => DartexifyArticleTemplate();
 
-  @override
-  Map<String, dynamic> getTemplateVars() {
-    final vars = super.getTemplateVars();
+  // @override
+  // Map<String, dynamic> getTemplateVars() {
+  //   final vars = super.getTemplateVars();
 
-    final executableName =
-        argResults['executable-name'] as String? ?? projectName;
+  //   final executableName =
+  //       argResults['executable-name'] as String? ?? projectName;
 
-    vars['executable_name'] = executableName;
+  //   vars['executable_name'] = executableName;
 
-    return vars;
-  }
+  //   return vars;
+  // }
 }

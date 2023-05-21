@@ -5,11 +5,11 @@ void run(HookContext context) {
   final author = context.vars['author'];
 
   // Read project title
-  final title = context.vars['title'];
+  final description = context.vars['description'];
 
   // update the author name
   context.vars['author'] = '{$author}';
 
   // update the title
-  context.vars['title'] = '{$title}';
+  context.vars['description'] = '{$description}';
 }

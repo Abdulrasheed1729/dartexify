@@ -10,9 +10,6 @@ import 'package:universal_io/io.dart';
 
 final RegExp _identifierRegExp = RegExp('[a-z_][a-z0-9_]*');
 
-const _defaultDescription =
-    'A very nice LaTeX Project created by DarTeXify CLI.';
-
 /// A method which returns a [Future<MasonGenerator>] given a [MasonBundle].
 typedef MasonGeneratorFromBundle = Future<MasonGenerator> Function(MasonBundle);
 
@@ -28,10 +25,15 @@ abstract class CreateSubCommand extends Command<int> {
         _generatorFromBrick = generatorFromBrick ?? MasonGenerator.fromBrick {
     argParser
       ..addOption(
+        'author',
+        help: 'Name of author.',
+      )
+      ..addOption(
         'description',
-        help: 'The description for this new project.',
+        help: '''
+            The description (subject matter) for this new project. E.g. (A Dart method for Analysing the Cauchy Differential Equation)
+            ''',
         aliases: ['desc'],
-        defaultsTo: _defaultDescription,
       )
       ..addOption(
         'output-directory',
@@ -41,10 +43,10 @@ abstract class CreateSubCommand extends Command<int> {
   }
 
   @override
-  String get description => throw UnimplementedError();
+  String get description => 'Create an awesome LaTeX project.';
 
   @override
-  String get name => throw UnimplementedError();
+  String get name => 'create';
 
   final Logger logger;
 
@@ -80,18 +82,6 @@ abstract class CreateSubCommand extends Command<int> {
     if (args.isEmpty) {
       usageException('No option specified for the project name.');
     }
-
-    if (args.length > 1) {
-      usageException('Multiple project names specified.');
-    }
-
-    final name = args.first;
-    final isValidProjectName = _isValidPackageName(name);
-    if (!isValidProjectName) {
-      usageException(
-        '"$name" is not a valid package name.',
-      );
-    }
   }
 
   /// Gets the project name.
@@ -102,7 +92,22 @@ abstract class CreateSubCommand extends Command<int> {
   }
 
   /// Gets the description for the project.
-  String get projectDescription => argResults['description'] as String? ?? '';
+  String get projectDescription {
+    return argResults['description'] as String? ??
+        logger.prompt(
+          'Project description?',
+          defaultValue: 'Creating Mobile Solutions the Dart (Flutter) way',
+        );
+  }
+
+  /// Gets the author name.
+  String get author {
+    return argResults['author'] as String? ??
+        logger.prompt(
+          'Name of Author?',
+          defaultValue: 'Plushy Dash',
+        );
+  }
 
   Future<MasonGenerator> _getGeneratorForTemplate() async {
     try {
@@ -141,10 +146,12 @@ abstract class CreateSubCommand extends Command<int> {
   Map<String, dynamic> getTemplateVars() {
     final projectName = this.projectName;
     final projectDescription = this.projectDescription;
+    final author = this.author;
 
     return <String, dynamic>{
       'project_name': projectName,
       'description': projectDescription,
+      'author': author,
     };
   }
 

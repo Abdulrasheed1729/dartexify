@@ -10,6 +10,8 @@ A Dart 🎯 CLI tool 🛠️ for creating LaTeX projects.
 
 ---
 
+Inspired by the [Very Good CLI][very_good_cli_link] and this [article][article_link]
+
 ## Getting Started 🚀
 
 If the CLI application is available on [pub](https://pub.dev), activate globally via:
@@ -69,3 +71,4 @@ $ open coverage/index.html
 [very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg
 [very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
 [very_good_cli_link]: https://github.com/VeryGoodOpenSource/very_good_cli
+[article_link]: https://blog.martisak.se/2020/05/11/gitlab-ci-latex-pipeline/

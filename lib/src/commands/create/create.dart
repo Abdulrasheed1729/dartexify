@@ -30,7 +30,7 @@ class CreateCommand extends Command<int> {
 
   @override
   String get description =>
-      'Creates a new LaTeX article project in the specified directory.';
+      'Creates a new LaTeX project in the specified directory.';
 
   @override
   String get name => 'create';

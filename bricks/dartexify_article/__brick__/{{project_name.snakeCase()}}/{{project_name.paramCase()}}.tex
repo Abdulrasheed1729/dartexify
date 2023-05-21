@@ -1,0 +1,28 @@
+\documentclass[11pt, a4paper]{article}
+
+\input{tex/preamble}
+
+\title{{ description }}
+\author{{ author }}
+\date{\today}
+
+\begin{document}
+    \maketitle
+
+    \begin{abstract}
+        \lipsum[1-1]
+    \end{abstract}
+    
+    \include{tex/introduction}
+
+    \include{tex/section-2}
+
+    \include{tex/conclusion}
+
+    \section*{Acknowledgment}
+    The author would like to thank all readers of this article. And a big shoutout to all Flutter and Dart developers.
+
+    \bibliographystyle{abbrv}
+    \bibliography{references}
+
+\end{document}
