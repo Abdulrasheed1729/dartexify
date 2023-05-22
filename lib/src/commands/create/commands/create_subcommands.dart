@@ -8,8 +8,6 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 import 'package:universal_io/io.dart';
 
-final RegExp _identifierRegExp = RegExp('[a-z_][a-z0-9_]*');
-
 /// A method which returns a [Future<MasonGenerator>] given a [MasonBundle].
 typedef MasonGeneratorFromBundle = Future<MasonGenerator> Function(MasonBundle);
 
@@ -69,11 +67,6 @@ abstract class CreateSubCommand extends Command<int> {
   Directory get outputDirectory {
     final directory = argResults['output-directory'] as String? ?? '.';
     return Directory(directory);
-  }
-
-  bool _isValidPackageName(String name) {
-    final match = _identifierRegExp.matchAsPrefix(name);
-    return match != null && match.end == name.length;
   }
 
   void _validateProjectName(List<String> args) {
