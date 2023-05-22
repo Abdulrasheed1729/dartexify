@@ -1,4 +1,5 @@
-## dartexify_cli
+# dartexify_cli
+
 
 ![coverage][coverage_badge]
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
@@ -10,7 +11,20 @@ A Dart 🎯 CLI tool 🛠️ for creating LaTeX projects.
 
 ---
 
-Inspired by the [Very Good CLI][very_good_cli_link] and this [article][article_link]
+Inspired by the [Very Good CLI][very_good_cli_link].
+
+## Overview
+Dartexify is a Dart CLI tool that helps you create LaTeX projects. It is a powerful tool that can generate LaTeX code from Dart code. Dartexify can be used to generate a variety of LaTeX documents, including articles, books, and presentations. It works the same way as the [Very Good CLI][very_good_cli_link].
+
+Dartexify is a powerful tool that can help you create LaTeX projects quickly and easily. It is a great tool for anyone who needs to create LaTeX documents.
+
+Here are some of the features of Dartexify:
+- Generate LaTeX code from Dart code
+- Create a variety of LaTeX documents, including articles, books, and presentations
+- Easy to use
+- Powerful
+- Free and open source
+
 
 ## Getting Started 🚀
 
@@ -72,3 +86,4 @@ $ open coverage/index.html
 [very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
 [very_good_cli_link]: https://github.com/VeryGoodOpenSource/very_good_cli
 [article_link]: https://blog.martisak.se/2020/05/11/gitlab-ci-latex-pipeline/
+[mason_link]: https://pub.dev/packages/mason
