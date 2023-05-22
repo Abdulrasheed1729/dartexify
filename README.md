@@ -39,15 +39,28 @@ Or locally via:
 ```sh
 dart pub global activate --source=path <path to this package>
 ```
+## Commands
+Create a LaTeX project in seconds based on the provided template. Each template has a corresponding sub-command (e.g.,`dartexify create article` will generate an article document project).
+```sh
+Creates a new LaTeX project in the specified directory.
+
+Usage: dartexify create <subcommand> <project-name> [arguments]
+-h, --help    Print this usage information.
+
+Available subcommands:
+  article   Generate a nice LaTeX article project.
+
+Run "dartexify help" to see global options.
+```
 
 ## Usage
 
 ```sh
-# Sample command
-$ dartexify sample
+# Create an article named "Hello Dartexify"
+$ datrexify create article "Hello Dartexify"
 
-# Sample command option
-$ dartexify sample --cyan
+# Show create command help
+$ dartexify create --help
 
 # Show CLI version
 $ dartexify --version
@@ -56,26 +69,7 @@ $ dartexify --version
 $ dartexify --help
 ```
 
-## Running Tests with coverage 🧪
 
-To run all unit tests use the following command:
-
-```sh
-$ dart pub global activate coverage 1.2.0
-$ dart test --coverage=coverage
-$ dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info
-```
-
-To view the generated coverage report you can use [lcov](https://github.com/linux-test-project/lcov)
-.
-
-```sh
-# Generate Coverage Report
-$ genhtml coverage/lcov.info -o coverage/
-
-# Open Coverage Report
-$ open coverage/index.html
-```
 
 ---
 
