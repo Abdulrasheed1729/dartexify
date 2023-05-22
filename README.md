@@ -1,4 +1,5 @@
-## dartexify_cli
+# dartexify_cli
+
 
 ![coverage][coverage_badge]
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
@@ -10,7 +11,20 @@ A Dart 🎯 CLI tool 🛠️ for creating LaTeX projects.
 
 ---
 
-Inspired by the [Very Good CLI][very_good_cli_link] and this [article][article_link]
+Inspired by the [Very Good CLI][very_good_cli_link].
+
+## Overview
+Dartexify is a Dart CLI tool that helps you create LaTeX projects. It is a powerful tool that can generate LaTeX code from Dart code. Dartexify can be used to generate a variety of LaTeX documents, including articles, books, and presentations. It works the same way as the [Very Good CLI][very_good_cli_link].
+
+Dartexify is a powerful tool that can help you create LaTeX projects quickly and easily. It is a great tool for anyone who needs to create LaTeX documents.
+
+Here are some of the features of Dartexify:
+- Generate LaTeX code from Dart code
+- Create a variety of LaTeX documents, including articles, books, and presentations
+- Easy to use
+- Powerful
+- Free and open source
+
 
 ## Getting Started 🚀
 
@@ -25,15 +39,28 @@ Or locally via:
 ```sh
 dart pub global activate --source=path <path to this package>
 ```
+## Commands
+Create a LaTeX project in seconds based on the provided template. Each template has a corresponding sub-command (e.g.,`dartexify create article` will generate an article document project).
+```sh
+Creates a new LaTeX project in the specified directory.
+
+Usage: dartexify create <subcommand> <project-name> [arguments]
+-h, --help    Print this usage information.
+
+Available subcommands:
+  article   Generate a nice LaTeX article project.
+
+Run "dartexify help" to see global options.
+```
 
 ## Usage
 
 ```sh
-# Sample command
-$ dartexify sample
+# Create an article named "Hello Dartexify"
+$ datrexify create article "Hello Dartexify"
 
-# Sample command option
-$ dartexify sample --cyan
+# Show create command help
+$ dartexify create --help
 
 # Show CLI version
 $ dartexify --version
@@ -42,26 +69,7 @@ $ dartexify --version
 $ dartexify --help
 ```
 
-## Running Tests with coverage 🧪
 
-To run all unit tests use the following command:
-
-```sh
-$ dart pub global activate coverage 1.2.0
-$ dart test --coverage=coverage
-$ dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info
-```
-
-To view the generated coverage report you can use [lcov](https://github.com/linux-test-project/lcov)
-.
-
-```sh
-# Generate Coverage Report
-$ genhtml coverage/lcov.info -o coverage/
-
-# Open Coverage Report
-$ open coverage/index.html
-```
 
 ---
 
@@ -72,3 +80,4 @@ $ open coverage/index.html
 [very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
 [very_good_cli_link]: https://github.com/VeryGoodOpenSource/very_good_cli
 [article_link]: https://blog.martisak.se/2020/05/11/gitlab-ci-latex-pipeline/
+[mason_link]: https://pub.dev/packages/mason
