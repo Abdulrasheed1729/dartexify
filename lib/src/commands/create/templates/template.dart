@@ -8,7 +8,7 @@ import 'package:mason/mason.dart';
 /// and help text describing the template.
 /// {@endtemplate}
 abstract class Template {
-   /// {@macro template}
+  /// {@macro template}
   const Template({
     required this.name,
     required this.bundle,

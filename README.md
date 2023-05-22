@@ -57,7 +57,7 @@ Run "dartexify help" to see global options.
 
 ```sh
 # Create an article named "Hello Dartexify"
-$ datrexify create article "Hello Dartexify"
+$ dartexify create article "Hello Dartexify"
 
 # Show create command help
 $ dartexify create --help
