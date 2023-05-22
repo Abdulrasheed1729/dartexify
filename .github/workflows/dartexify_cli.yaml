@@ -26,8 +26,6 @@ jobs:
 
   build:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
-    with:
-      coverage_excludes: "lib/src/commands/create/templates/dartexify_article/dartexify_article_bundle.dart"
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
