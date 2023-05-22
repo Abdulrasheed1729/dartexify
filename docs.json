@@ -1,10 +1,11 @@
 {
-    "name": "docs.page",
+    "name": "Dartexify",
     "theme": "#36B9B9",
     "sidebar": [
-      ["Getting Started",
-        ["Overview", "/"],
-        ["Another Page", "/another-page"]
+      [
+        "Getting Started",
+          ["Overview", "/"],
+          ["Another Page", "/another-page"]
       ]
     ]
   }
