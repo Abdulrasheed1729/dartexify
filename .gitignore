@@ -13,3 +13,7 @@ coverage/
 
 # Android studio and IntelliJ
 .idea
+
+# 
+bricks/.mason/bricks.json
+bricks/mason-lock.json
