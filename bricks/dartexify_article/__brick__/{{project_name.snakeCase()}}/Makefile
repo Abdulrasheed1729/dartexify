@@ -1,11 +1,12 @@
-SOURCES=hello-dartexify.tex
-PDF_OBJECTS=$(SOURCES:.tex=.pdf)
+PROJECTNAME={{project_name.paramCase()}}
+BUILDDIR=build
 
-LATEXMK=latexmk
-LATEXMK_OPTIONS=-bibtex -pdf -f
+.PHONY: $(PROJECTNAME).pdf all clean
 
-run:
-	$(LATEXMK) $(SOURCES) $(LATEXMK_OPTIONS_EXTRA) $(LATEXMK_OPTIONS)
+all: $(PROJECTNAME).pdf
+
+$(PROJECTNAME).pdf: $(PROJECTNAME).tex
+	latexmk -pdf -synctex=1 -verbose -bibtex -interaction=nonstopmode -file-line-error -output-directory=$(BUILDDIR) $<
 
 clean:
-	-$(LATEXMK) -bibtex -CA
+	latexmk -output-directory=$(BUILDDIR) -c && rm -rf build/*

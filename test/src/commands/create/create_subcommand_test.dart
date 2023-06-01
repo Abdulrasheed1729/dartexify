@@ -270,19 +270,17 @@ Run "dartexify help" to see global options.
             );
 
             verify(
-            () => template.onGenerateComplete(
-              logger,
-              any(
-                that: isA<Directory>().having(
-                  (d) => d.path,
-                  'path',
-                  'test_dir/test_project',
+              () => template.onGenerateComplete(
+                logger,
+                any(
+                  that: isA<Directory>().having(
+                    (d) => d.path,
+                    'path',
+                    'test_dir/test_project',
+                  ),
                 ),
               ),
-            ),
-          ).called(1);
-
-          
+            ).called(1);
           });
         });
       });
